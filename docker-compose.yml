@@ -1,0 +1,14 @@
+version: '3.4'
+services:
+  db:
+    image: postgres:9.6-alpine
+  api:
+    build:
+      context: .
+      target: builder
+    volumes:
+      - .:/app
+    ports:
+      - "4000:4000"
+    depends_on:
+      - db
