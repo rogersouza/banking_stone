@@ -24,4 +24,11 @@ defmodule Banking.AuthenticationTest do
     plain_text_password = @user_fixture["account"]["password"]
     refute user.account.password == plain_text_password
   end
+
+  test "register/2 rejects invalid emails" do
+    account = %{"email" => "invalid_email.com", "password" => "123456"}
+    user_fixture = %{@user_fixture | "account" => account}
+    {:error, changeset} = Authentication.register(user_fixture)
+    assert "has invalid format" in errors_on(changeset.changes.account).email
+  end
 end
