@@ -2,7 +2,7 @@ defmodule Authentication do
   @moduledoc """
   Holds all the authentication logic
   """
-  alias Banking.{Repo, Guardian}
+  alias Authentication.{Repo, Guardian}
   alias Authentication.{User, Account, Encryptor, Credentials}
 
   @doc """
@@ -33,8 +33,8 @@ defmodule Authentication do
          {:error, :malformed_credentials, changeset} -> # Malformed credentials
        end
   """
-  @spec sign_in(credentials :: map()) ::
-          {:ok, token() :: String.t()}
+  @spec sign_in(map()) ::
+          {:ok, String.t()}
           | {:error, :malformed_credentials, Ecto.Changeset.t()}
           | {:error, :unauthorized}
   def sign_in(credentials) do
