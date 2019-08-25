@@ -1,4 +1,4 @@
-defmodule BankingWeb.ErrorView do
+defmodule BankingWeb.V1.ErrorView do
   use BankingWeb, :view
 
   # If you want to customize a particular status code
@@ -16,6 +16,7 @@ defmodule BankingWeb.ErrorView do
 
   def render("400.json", changeset) do
     %{
+      status: "400",
       errors: Ecto.Changeset.traverse_errors(changeset, &translate_error/1)
     }
   end

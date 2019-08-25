@@ -1,5 +1,6 @@
 defmodule Authentication.User do
   @moduledoc false
+  @derive {Jason.Encoder, only: [:id, :name, :account]}
   use Ecto.Schema
 
   import Ecto.Changeset
@@ -10,8 +11,8 @@ defmodule Authentication.User do
   @required_fields [:name]
 
   schema "users" do
-    field :name, :string
-    belongs_to :account, Account
+    field(:name, :string)
+    belongs_to(:account, Account)
   end
 
   def changeset(user, params) do

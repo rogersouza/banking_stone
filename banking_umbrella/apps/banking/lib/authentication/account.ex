@@ -1,6 +1,6 @@
 defmodule Authentication.Account do
   @moduledoc false
-  
+  @derive {Jason.Encoder, only: [:id, :email]}
   use Ecto.Schema
 
   import Ecto.Changeset
@@ -20,6 +20,7 @@ defmodule Authentication.Account do
     |> cast(params, @optional_fields ++ @required_fields)
     |> validate_required(@required_fields)
     |> unique_constraint(:email)
+    |> validate_format(:email, ~r/@/)
     |> hash_password()
   end
 

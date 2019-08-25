@@ -3,7 +3,7 @@ defmodule Authentication do
   Holds all the authentication logic
   """
   alias Banking.Repo
-  alias Authentication.{User, Account}
+  alias Authentication.{User, Account, Encryptor}
 
   @doc """
   Register a new user
