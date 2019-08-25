@@ -13,6 +13,12 @@ defmodule BankingWeb.V1.AuthenticationController do
         |> put_status(:unauthorized)
         |> put_view(BankingWeb.ErrorView)
         |> render("401.json")
+
+      {:error, :malformed_credentials, changeset} ->
+        conn
+        |> put_status(:bad_request)
+        |> put_view(BankingWeb.ErrorView)
+        |> render("400.json", changeset)
     end
   end
 end
