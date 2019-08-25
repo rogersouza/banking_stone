@@ -11,6 +11,7 @@ defmodule BankingWeb.V1.UserController do
       {:error, changeset} ->
         conn
         |> put_status(:bad_request)
+        |> put_view(BankingWeb.ErrorView)
         |> render("400.json", changeset)
     end
   end
