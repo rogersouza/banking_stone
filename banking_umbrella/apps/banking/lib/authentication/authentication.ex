@@ -36,7 +36,7 @@ defmodule Authentication do
          {:ok, token, _claims} <- Guardian.encode_and_sign(account, %{}) do
       {:ok, token}
     else
-      %{valid?: false} -> {:error, :malformed_credentials, credentials}
+      %{valid?: false} -> {:error, :malformed_credentials, changeset}
       _any_other_case -> {:error, :unauthorized}
     end
   end
