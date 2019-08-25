@@ -16,3 +16,7 @@ config :banking_web, BankingWeb.Endpoint,
 
 # Print only warnings and errors during test
 config :logger, level: :warn
+
+config :banking, Banking.Guardian,
+  issuer: "banking",
+  secret_key: "BleooKmS9xeLcE6wvTAE/2D1352bOy+q8LKNvuPexAAyH21GS+na7rKh/o72cQyc"
