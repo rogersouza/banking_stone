@@ -35,7 +35,7 @@ defmodule BankingWeb.V1.AuthenticationControllerTest do
       assert json_response(conn, 401)
     end
 
-    test "in case of missing fields on the credentials request, returns 400" do
+    test "in case of missing fields on the credentials request, returns 400", %{conn: conn} do
       malformed_credentials = %{"email" => @email}
       login_path = api_v1_authentication_path(conn, :sign_in)
       
