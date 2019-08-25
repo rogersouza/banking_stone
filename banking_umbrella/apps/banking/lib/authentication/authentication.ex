@@ -22,6 +22,17 @@ defmodule Authentication do
     |> Repo.insert()
   end
 
+  @doc """
+  Returns a JWT if the credentials are valid
+
+  ### Example 
+  iex> credentials = %{"email" => "mail@mail.com", "password" => "123456"}
+  iex> case Authentication.sign_in(credentials) do
+         {:ok, token} -> # Credentials are valid
+         {:error, :unauthorized} -> # Invalid password/email
+         {:error, :malformed_credentials, changeset} -> # Malformed credentials
+       end
+  """
   @spec sign_in(credentials :: map()) ::
           {:ok, token() :: String.t()}
           | {:error, :malformed_credentials, Ecto.Changeset.t()}
