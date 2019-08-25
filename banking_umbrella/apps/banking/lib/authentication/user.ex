@@ -18,7 +18,7 @@ defmodule Authentication.User do
   def changeset(user, params) do
     user
     |> cast(params, @optional_fields ++ @required_fields)
-    |> cast_assoc(:account)
+    |> cast_assoc(:account, required: true)
     |> validate_required(@required_fields)
   end
 end
