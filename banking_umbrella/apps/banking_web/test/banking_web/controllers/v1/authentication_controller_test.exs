@@ -26,5 +26,13 @@ defmodule BankingWeb.V1.AuthenticationControllerTest do
 
       assert Map.has_key?(response, "token")
     end
+
+    test "in case of invalid credentials, a 401 status code is returned", %{conn: conn} do
+      credentials = %{"email" => @email, "password" => "wrong_password"}
+      login_path = api_v1_authentication_path(conn, :sign_in)
+
+      conn = post(conn, login_path, credentials)
+      assert json_response(conn, 401)
+    end
   end
 end

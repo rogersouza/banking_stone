@@ -7,6 +7,12 @@ defmodule BankingWeb.V1.AuthenticationController do
         conn
         |> put_status(:ok)
         |> render("token.json", %{token: token})
+
+      {:error, :unauthorized} ->
+        conn
+        |> put_status(:unauthorized)
+        |> put_view(BankingWeb.ErrorView)
+        |> render("401.json")
     end
   end
 end

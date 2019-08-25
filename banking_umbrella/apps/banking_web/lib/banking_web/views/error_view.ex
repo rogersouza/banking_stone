@@ -19,4 +19,8 @@ defmodule BankingWeb.ErrorView do
       errors: Ecto.Changeset.traverse_errors(changeset, &translate_error/1)
     }
   end
+
+  def render("401.json", _assigns) do
+    %{message: "Unauthorized"}
+  end
 end
