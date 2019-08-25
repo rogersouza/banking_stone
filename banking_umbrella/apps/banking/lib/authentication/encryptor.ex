@@ -3,7 +3,9 @@ defmodule Authentication.Encryptor do
   Conveniences to encrypt and check for password validity
   """
 
+  alias Comeonin.Bcrypt
+
   def encrypt(password) do
-    Base.encode32(password)
+    Bcrypt.hashpwsalt(password)
   end
 end
