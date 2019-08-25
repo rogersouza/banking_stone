@@ -9,6 +9,6 @@ defmodule BankingWeb.Router do
   scope "/api/v1", BankingWeb, as: :api_v1 do
     pipe_through :api
 
-    post("/user/create", V1.UserController, :create)
+    resources("/user", V1.UserController, only: [:create])
   end
 end
