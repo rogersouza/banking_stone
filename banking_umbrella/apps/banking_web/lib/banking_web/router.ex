@@ -9,5 +9,6 @@ defmodule BankingWeb.Router do
     pipe_through :api
 
     resources("/user", V1.UserController, only: [:create])
+    post("/login", V1.AuthenticationController, :sign_in)
   end
 end

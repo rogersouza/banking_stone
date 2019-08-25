@@ -8,4 +8,8 @@ defmodule Authentication.Encryptor do
   def encrypt(password) do
     Bcrypt.hashpwsalt(password)
   end
+
+  def valid_password?(password, hash) do
+    Bcrypt.checkpw(password, hash)
+  end
 end
