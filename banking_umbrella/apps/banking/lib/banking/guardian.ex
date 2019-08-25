@@ -1,4 +1,9 @@
 defmodule Banking.Guardian do
+  @moduledoc """
+  Conveniences for JWT generation and data retrieval from them
+  
+  Please check https://github.com/ueberauth/guardian for further information
+  """
   use Guardian, otp_app: :banking
 
   def subject_for_token(%{id: id}, _claims) do

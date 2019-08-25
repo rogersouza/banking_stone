@@ -1,10 +1,15 @@
 defmodule Banking.AuthenticationTest do
   use Banking.DataCase
 
+  alias Banking.Guardian
+
+  @email "jane_doe@mail.com"
+  @password "jane12345"
+
   @user_fixture %{
     "account" => %{
-      "email" => "jane_doe@mail.com",
-      "password" => "jane12345"
+      "email" => @email,
+      "password" => @password
     },
     "name" => "Jane Doe"
   }
@@ -30,5 +35,18 @@ defmodule Banking.AuthenticationTest do
     user_fixture = %{@user_fixture | "account" => account}
     {:error, changeset} = Authentication.register(user_fixture)
     assert "has invalid format" in errors_on(changeset.changes.account).email
+  end
+
+  describe "sign_in/1" do
+    setup do
+      {:ok, _user} = Authentication.register(@user_fixture)
+      :ok
+    end
+
+    test "returns {:ok, token} for valid credentials" do
+      credentials = %{"email" => @email, "password" => @password}
+      assert {:ok, token} = Authentication.sign_in(credentials)
+      assert {:ok, _claims} = Guardian.decode_and_verify(token)
+    end
   end
 end
