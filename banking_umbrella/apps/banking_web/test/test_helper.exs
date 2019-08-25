@@ -1,2 +1,2 @@
 ExUnit.start()
-Ecto.Adapters.SQL.Sandbox.mode(Banking.Repo, :manual)
+Ecto.Adapters.SQL.Sandbox.mode(Authentication.Repo, :manual)

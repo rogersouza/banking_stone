@@ -1,7 +1,7 @@
-defmodule Banking.AuthenticationTest do
-  use Banking.DataCase
+defmodule AuthenticationTest do
+  use Authentication.DataCase
 
-  alias Banking.Guardian
+  alias Authentication.Guardian
 
   @email "jane_doe@mail.com"
   @password "jane12345"

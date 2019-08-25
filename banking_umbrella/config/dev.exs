@@ -9,6 +9,14 @@ config :banking, Banking.Repo,
   show_sensitive_data_on_connection_error: true,
   pool_size: 10
 
+config :authentication, Authentication.Repo,
+  username: "postgres",
+  password: "postgres",
+  database: "banking_dev",
+  hostname: "localhost",
+  show_sensitive_data_on_connection_error: true,
+  pool_size: 10
+
 # For development, we disable any cache and enable
 # debugging and code reloading.
 #
@@ -56,6 +64,6 @@ config :phoenix, :plug_init_mode, :runtime
 # in production as building large stacktraces may be expensive.
 config :phoenix, :stacktrace_depth, 20
 
-config :banking, Banking.Guardian,
-  issuer: "banking",
+config :authentication, Authentication.Guardian,
+  issuer: "authentication",
   secret_key: "BleooKmS9xeLcE6wvTAE/2D1352bOy+q8LKNvuPexAAyH21GS+na7rKh/o72cQyc"

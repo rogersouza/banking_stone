@@ -13,8 +13,11 @@ use Mix.Config
 config :banking,
   ecto_repos: [Banking.Repo]
 
+config :authentication,
+  ecto_repos: [Authentication.Repo]
+
 config :banking_web,
-  ecto_repos: [Banking.Repo],
+  ecto_repos: [Banking.Repo, Authentication.Repo],
   generators: [context_app: :banking]
 
 # Configures the endpoint

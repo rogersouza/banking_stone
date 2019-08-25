@@ -1,10 +1,10 @@
-defmodule Banking.Guardian do
+defmodule Authentication.Guardian do
   @moduledoc """
   Conveniences for JWT generation and data retrieval from them
   
   Please check https://github.com/ueberauth/guardian for further information
   """
-  use Guardian, otp_app: :banking
+  use Guardian, otp_app: :authentication
 
   def subject_for_token(%{id: id}, _claims) do
     sub = to_string(id)
@@ -16,7 +16,7 @@ defmodule Banking.Guardian do
   end
 
   def resource_from_claims(%{"sub" => id}) do
-    resource = Banking.Repo.get_by(Authentication.Account, id: id)
+    resource = Authentication.Repo.get_by(Authentication.Account, id: id)
     {:ok, resource}
   end
 
