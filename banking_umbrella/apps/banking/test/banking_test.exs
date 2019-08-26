@@ -5,8 +5,6 @@ defmodule BankingTest do
 
   alias Banking.Repo
 
-  @email "customer@mail.com"
-
   @customer_fixture %{
     "name" => "Jane Doe",
     "email" => "jane_doe@mail.com"
@@ -22,17 +20,17 @@ defmodule BankingTest do
 
   describe "create_customer/2" do
     test "creates a new customer" do
-      assert {:ok, customer, _wallet} = Banking.create_customer(@customer_fixture)
+      assert {:ok, _customer} = Banking.create_customer(@customer_fixture)
     end
 
     test "rejects duplicated emails" do
-      {:ok, customer, _wallet} = Banking.create_customer(@customer_fixture)
-      {:error, :customer, changeset} = Banking.create_customer(@customer_fixture)
+      {:ok, _customer} = Banking.create_customer(@customer_fixture)
+      {:error, changeset} = Banking.create_customer(@customer_fixture)
       assert "has already been taken" in errors_on(changeset).email
     end
 
     test "gives the user a initial balance of 1000" do
-      {:ok, customer, _wallet} = Banking.create_customer(@customer_fixture)
+      {:ok, customer} = Banking.create_customer(@customer_fixture)
       customer_balance = wallet_balance(customer.id)
       one_thousand = Money.new(1000)
 
