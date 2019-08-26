@@ -1,9 +1,16 @@
 defmodule Banking do
-  @moduledoc """
-  Banking keeps the contexts that define your domain
-  and business logic.
+  alias Banking.Repo
+  alias Banking.Customer
+  alias Banking.CustomerManager
 
-  Contexts are also responsible for managing your data, regardless
-  if it comes from the database, an external API or others.
-  """
+  def create_customer(customer) do
+    customer_changeset = Customer.changeset(%Customer{}, customer)
+    multi = CustomerManager.create_customer_multi(customer_changeset)
+
+    case Repo.transaction(multi) do
+      {:ok, %{customer: customer, wallet: wallet}} -> {:ok, customer, wallet}
+      {:error, :customer, changeset, _} -> {:error, :customer, changeset}
+      {:error, :wallet, changeset, _} -> {:error, :wallet, changeset}
+    end
+  end
 end

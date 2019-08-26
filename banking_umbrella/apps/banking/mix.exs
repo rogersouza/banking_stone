@@ -41,6 +41,7 @@ defmodule Banking.MixProject do
       {:jason, "~> 1.0"},
       {:comeonin, "~> 3.2"},
       {:guardian, "~> 1.2"},
+      {:money, "~> 1.4"}
     ]
   end
 
