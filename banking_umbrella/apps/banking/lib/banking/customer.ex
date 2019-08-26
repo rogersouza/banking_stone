@@ -1,4 +1,7 @@
 defmodule Banking.Customer do
+  @moduledoc false
+  @derive {Jason.Encoder, only: [:name, :email]}
+
   use Ecto.Schema
   
   import Ecto.Changeset
@@ -8,6 +11,7 @@ defmodule Banking.Customer do
   schema "customers" do
     field :name, :string
     field :email, :string
+    has_one :wallet, Banking.Wallet
   end
 
   def changeset(customer, params) do

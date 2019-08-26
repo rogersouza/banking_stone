@@ -10,5 +10,7 @@ defmodule BankingWeb.Router do
 
     resources("/user", V1.UserController, only: [:create])
     post("/login", V1.AuthenticationController, :sign_in)
+
+    resources("/customer", V1.CustomerController, only: [:create])
   end
 end
