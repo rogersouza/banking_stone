@@ -40,4 +40,12 @@ config :phoenix, :json_library, Jason
 
 config :comeonin, :bcrypt_log_rounds, 4
 
+config :money,
+  default_currency: :BRL,
+  separator: ".",
+  delimiter: ","
+
+config :banking,
+  initial_balance: 1000
+
 import_config "#{Mix.env()}.exs"
