@@ -27,3 +27,5 @@ config :logger, level: :warn
 config :authentication, Authentication.Guardian,
   issuer: "authentication",
   secret_key: "BleooKmS9xeLcE6wvTAE/2D1352bOy+q8LKNvuPexAAyH21GS+na7rKh/o72cQyc"
+
+config :banking, Banking.Mailer, adapter: Bamboo.TestAdapter

@@ -35,9 +35,6 @@ config :logger, :console,
 # Use Jason for JSON parsing in Phoenix
 config :phoenix, :json_library, Jason
 
-# Import environment specific config. This must remain at the bottom
-# of this file so it overrides the configuration defined above.
-
 config :comeonin, :bcrypt_log_rounds, 4
 
 config :money,
@@ -49,6 +46,10 @@ config :money,
   symbol_space: false
 
 config :banking,
-  initial_balance: 100000
+  initial_balance: 100_000
 
+config :banking, Banking.Mailer, adapter: Bamboo.LocalAdapter
+
+# Import environment specific config. This must remain at the bottom
+# of this file so it overrides the configuration defined above.
 import_config "#{Mix.env()}.exs"

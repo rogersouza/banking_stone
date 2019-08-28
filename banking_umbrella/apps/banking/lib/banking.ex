@@ -1,8 +1,10 @@
 defmodule Banking do
   @moduledoc false
-
+  
   alias Banking.Repo
   alias Banking.{Customer, Wallet, TransactionManager}
+  alias Banking.Mailer
+  alias Banking.Mailer.Email
 
   @type amount() :: String.t() | Money.t()
 
@@ -39,7 +41,7 @@ defmodule Banking do
   # Wallet's balance -> 100,00
   {:ok, %Wallet{}} = Banking.withdraw("50,0", customer_id)
   ```
-
+  In this case, a email will be send indicating the withdrawal
 
   ## Someone tries to withdraw more money than they have in their wallet
 
@@ -73,9 +75,18 @@ defmodule Banking do
     |> TransactionManager.withdraw(customer.id)
     |> Repo.transaction()
     |> case do
-      {:ok, %{wallet: wallet}} -> {:ok, wallet}
-      {:error, :wallet, wallet_changeset, _} -> {:error, wallet_changeset}
-      {:error, :transaction, changeset, _} -> {:error, changeset}
+      {:ok, %{wallet: wallet, transaction: transaction}} ->
+        customer
+        |> Email.withdrawal(transaction.amount)
+        |> Mailer.deliver_now()
+
+        {:ok, wallet}
+
+      {:error, :wallet, wallet_changeset, _} ->
+        {:error, wallet_changeset}
+
+      {:error, :transaction, changeset, _} ->
+        {:error, changeset}
     end
   end
 end
