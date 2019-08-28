@@ -1,6 +1,7 @@
 defmodule BankingTest do
   use Banking.DataCase
-
+  use Bamboo.Test
+  
   import Ecto.Query
 
   alias Banking.Repo
@@ -86,6 +87,14 @@ defmodule BankingTest do
       
       withdraw_transaction = Repo.one(Banking.Transaction)
       assert withdraw_transaction.type == "withdraw"
+    end
+
+    test "sends to the customer a email reporting the withdraw", %{customer: customer} do
+      amount = Money.new(50_000)
+      {:ok, _balance} = Banking.withdraw(amount, customer.id)
+
+      withdrawal_email = Banking.Mailer.Email.withdrawal(customer, amount)
+      assert_delivered_email withdrawal_email
     end
   end
 end
