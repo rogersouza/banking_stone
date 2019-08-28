@@ -25,7 +25,7 @@ defmodule Banking.Wallet do
     |> validate_required(@required_fields)
     |> check_constraint(:balance,
       name: :balance_must_be_positive,
-      message: "balance must be positive"
+      message: "insufficient funds"
     )
   end
 end

@@ -1,7 +1,8 @@
 defmodule Banking do
   @moduledoc false
+
   alias Banking.Repo
-  alias Banking.{Customer, Wallet, Transaction, TransactionManager}
+  alias Banking.{Customer, Wallet, TransactionManager}
 
   @type amount() :: String.t() | Money.t()
 
@@ -64,31 +65,17 @@ defmodule Banking do
 
   """
   @spec withdraw(amount(), String.t() | integer()) ::
-          {:ok, Money.t()} | {:error, :insufficient_funds} | {:error, Ecto.Changeset.t()}
+          {:ok, Wallet.t()} | {:error, :insufficient_funds} | {:error, Ecto.Changeset.t()}
   def withdraw(amount, customer_id) do
     customer = Repo.get!(Customer, customer_id)
 
-    withdraw =
-      %Transaction{}
-      |> Transaction.changeset(%{type: "withdraw", amount: amount, customer_id: customer.id})
-
-    with {:ok, _valid_amount} <- money(amount),
-         true <- TransactionManager.can_withdraw?(withdraw),
-         {:ok, %{wallet: wallet}} <-
-           withdraw
-           |> TransactionManager.withdraw()
-           |> Repo.transaction() do
-      {:ok, wallet}
-    else
-      false -> {:error, :insufficient_funds}
-      :error -> {:error, withdraw}
+    amount
+    |> TransactionManager.withdraw(customer.id)
+    |> Repo.transaction()
+    |> case do
+      {:ok, %{wallet: wallet}} -> {:ok, wallet}
+      {:error, :wallet, wallet_changeset, _} -> {:error, wallet_changeset}
       {:error, :transaction, changeset, _} -> {:error, changeset}
     end
   end
-
-  defp money(%Money{} = amount), do: {:ok, amount}
-  defp money(amount) when is_binary(amount), do: Money.parse(amount)
-
-  defp money(_),
-    do: raise(ArgumentError, message: "the amount should be either %Money{} or a string")
 end
