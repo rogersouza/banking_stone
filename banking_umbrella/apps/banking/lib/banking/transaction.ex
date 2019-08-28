@@ -24,7 +24,7 @@ defmodule Banking.Transaction do
   defp validate_amount_is_positive(changeset) do
     amount = get_field(changeset, :amount)
 
-    if Money.negative?(amount) do
+    if Money.negative?(amount) or Money.zero?(amount) do
       add_error(changeset, :amount, "should be a positive number")
     else
       changeset
