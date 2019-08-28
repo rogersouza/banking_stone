@@ -77,7 +77,7 @@ defmodule BankingTest do
 
     test "doesn't allow a amount value greater than the wallet balance", %{customer: customer} do
       current_balance = wallet_balance(customer.id)
-      amount = Money.new(current_balance.amount + 10000)
+      amount = Money.new(current_balance.amount + 10_000)
       assert {:error, :insufficient_funds} = Banking.withdraw(amount, customer.id)
     end
 
