@@ -23,4 +23,24 @@ defmodule BankingWeb.V1.CustomerController do
         |> render("400.json", changeset)
     end
   end
+
+  def withdraw(conn, %{"id" => id, "amount" => amount}) do
+    case Banking.withdraw(amount, id) do
+      {:ok, wallet} ->
+        conn
+        |> put_status(:ok)
+        |> render("balance.json", %{wallet: wallet})
+
+      {:error, :insufficient_funds} ->
+        conn
+        |> put_status(:bad_request)
+        |> render("insufficient_funds.json")
+      
+      {:error, changeset} ->
+        conn
+        |> put_view(BankingWeb.ErrorView)
+        |> put_status(:bad_request)
+        |> render("400.json", changeset)
+    end
+  end
 end

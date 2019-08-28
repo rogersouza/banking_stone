@@ -15,6 +15,7 @@ defmodule BankingWeb.Router do
     pipe_through :authenticated
 
     resources("/customer", V1.CustomerController, only: [:create])
+    post("/customer/:id/withdraw", V1.CustomerController, :withdraw)
   end
   
   scope "/api/v1", BankingWeb, as: :api_v1 do

@@ -1,6 +1,6 @@
 defmodule Banking.Customer do
   @moduledoc false
-  @derive {Jason.Encoder, only: [:name, :email]}
+  @derive {Jason.Encoder, only: [:name, :email, :id]}
 
   use Ecto.Schema
   
