@@ -12,12 +12,12 @@ defmodule BankingWeb.V1.AuthenticationControllerTest do
     :ok
   end
 
-  describe "sign_in/2" do
+  describe "create/2" do
     setup :insert_user
 
     test "in case of valid credentials, returns a token", %{conn: conn} do
       credentials = %{"email" => @email, "password" => @password}
-      login_path = api_v1_authentication_path(conn, :sign_in)
+      login_path = api_v1_authentication_path(conn, :create)
 
       response =
         conn
@@ -29,7 +29,7 @@ defmodule BankingWeb.V1.AuthenticationControllerTest do
 
     test "in case of invalid credentials, a 401 status code is returned", %{conn: conn} do
       credentials = %{"email" => @email, "password" => "wrong_password"}
-      login_path = api_v1_authentication_path(conn, :sign_in)
+      login_path = api_v1_authentication_path(conn, :create)
 
       conn = post(conn, login_path, credentials)
       assert json_response(conn, 401)
@@ -37,7 +37,7 @@ defmodule BankingWeb.V1.AuthenticationControllerTest do
 
     test "in case of missing fields on the credentials request, returns 400", %{conn: conn} do
       malformed_credentials = %{"email" => @email}
-      login_path = api_v1_authentication_path(conn, :sign_in)
+      login_path = api_v1_authentication_path(conn, :create)
       
       conn = post(conn, login_path, malformed_credentials)
       assert json_response(conn, 400)

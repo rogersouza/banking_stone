@@ -22,7 +22,7 @@ defmodule BankingWeb.Router do
   scope "/api/v1", BankingWeb, as: :api_v1 do
     pipe_through :api
     
-    post("/auth-token", V1.AuthenticationController, :sign_in)
+    post("/auth-token", V1.AuthenticationController, :create)
     resources("/users", V1.UserController, only: [:create])
   end
 end
