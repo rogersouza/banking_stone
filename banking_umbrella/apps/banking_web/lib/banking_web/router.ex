@@ -13,9 +13,10 @@ defmodule BankingWeb.Router do
   scope "/api/v1", BankingWeb, as: :api_v1 do
     pipe_through :api
     pipe_through :authenticated
-
-    resources("/customer", V1.CustomerController, only: [:create])
-    post("/customer/:id/withdraw", V1.CustomerController, :withdraw)
+    
+    resources("/customer", V1.CustomerController, only: [:create]) do
+      resources("/withdraw", V1.WithdrawController, only: [:create])
+    end
   end
   
   scope "/api/v1", BankingWeb, as: :api_v1 do
